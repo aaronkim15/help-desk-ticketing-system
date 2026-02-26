@@ -8,8 +8,18 @@
 
 
 document.addEventListener("DOMContentLoaded", () => {
+    verifyLogin();
     initSearchBar();
+    initLogoutButton();
 })
+
+function verifyLogin() {
+    // TODO: replace with cookie header check
+    const token = localStorage.getItem("token")
+    if (!token) {
+        window.location.replace("../pages/login.html")
+    }
+}
 
 
 function initSearchBar() {
@@ -51,5 +61,15 @@ function initSearchBar() {
                 resultsUI.appendChild(listItem)
             }
         }
+    })
+}
+
+function initLogoutButton() {
+    const logoutButton = document.getElementById("logout");
+
+    logoutButton.addEventListener("click", (e) => {
+        // TODO: replace with proper logout
+        localStorage.removeItem("token");
+        window.location.replace("../pages/login.html")
     })
 }
