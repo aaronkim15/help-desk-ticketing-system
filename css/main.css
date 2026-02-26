@@ -149,6 +149,31 @@ nav ul li:hover {
     outline: none;
 }
 
+.search-bar-wrapper {
+    position: relative;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.search-results {
+    position: absolute;
+    top:100%;
+    background-color: #d3d6da;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    list-style: none;
+}
+
+.search-results li {
+    padding: 4px 8px;
+}
+
+.hidden {
+    display: none;
+}
+
 header .search-icon, header .notification-icon, header .create-icon {
     height: 20px;
     width: 20px;

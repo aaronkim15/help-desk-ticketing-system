@@ -1,13 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../css/mainpage.css">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../css/main.css">
+        <script src="../js/main.js"></script>
     <title>Help Desk - Home</title>
-</head>
-<body>
-    <aside>
+    </head>
+    <body>
+        <aside>
         <nav>
             <section class="nav-main">
                 <div class="logo">He<span>lp</span>Desk</div>
@@ -27,28 +28,33 @@
                 <div class="profile inset">
                     <img class="profile-icon" alt="profile icon" src="../assets/profile_alt.svg">
                     <span class="username">John Doe</span>
-                </div>
-                <button>
-                    <img class="nav-icon" alt="logout icon" src="../assets/logout.svg">
-                    <span>Logout</span>
-                </button>
-            </section>
-        </nav>
+                    </div>
+                    <button>
+                        <img class="nav-icon" alt="logout icon" src="../assets/logout.svg">
+                        <span>Logout</span>
+                        </button>
+                        </section>
+                    </nav>
     </aside>
     <main class="main-content">
         <header class="content-header">
-            <div class="search-bar">
-                <img class="search-icon" alt="search icon" src="../assets/search.svg">
-                <input type="text" placeholder="Find your ticket" class="search-input">
+            <div class="search-bar-wrapper">
+                <div class="search-bar">
+                    <img class="search-icon" alt="search icon" src="../assets/search.svg">
+                    <input type="text" placeholder="Find your ticket" class="search-input">
+                </div>
+                <ul class="search-results hidden">
+                    <li>Ticket 1</li>
+                </ul>
             </div>
             <div>
                 <a class="create-ticket" href="../pages/create.html"><img class="create-icon" src="../assets/plus.svg"></a>
                 <!-- <img class="notification-icon" alt="notification icon" src="../assets/notifications_alt.svg"> -->
-            </div>
-        </header>
-        <section class="content">
-            <!-- Main content goes here -->
-        </section>
-    </main>
-</body>
-</html>
+                </div>
+            </header>
+            <section class="content">
+                <!-- Main content goes here -->
+                </section>
+                </main>
+                </body>
+        </html>
