@@ -154,8 +154,9 @@ header .search-icon, header .notification-icon, header .create-icon {
     width: 20px;
 }
 
-button:has(.create-icon) {
+a:has(.create-icon) {
     border-radius: 50%;
+    border: 1px solid #242424;
     height: 30px;
     width: 30px;
     padding: 0;
