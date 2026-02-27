@@ -7,8 +7,11 @@
  */
 
 
+
+
 document.addEventListener("DOMContentLoaded", () => {
     verifyLogin();
+    initNavBar();
     initSearchBar();
     initLogoutButton();
 })
@@ -72,4 +75,15 @@ function initLogoutButton() {
         localStorage.removeItem("token");
         window.location.replace("../pages/login.html")
     })
+}
+
+function initNavBar() {
+
+    // TODO: replace with role check from user profile (via GET request)
+    const isAdmin = false
+
+    if (!isAdmin) {
+        const allTicketsNav = document.getElementById("all-tickets")
+        allTicketsNav.parentNode.removeChild(allTicketsNav)
+    }
 }
