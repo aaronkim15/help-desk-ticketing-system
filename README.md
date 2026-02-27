@@ -4,10 +4,24 @@
 A web-based help desk ticketing system that allows customers to report and track issues, which support agents can pick up and resolve transparently.
 
 ## Tech Stack
+- frontend: JavaScript, HTML, CSS
+- backend: 
 
 ## Project Structure
 
 ## Getting Started
 ### Prerequisites
+- Git
 ### Installation
+1. Click the green "Code" button on the repository
+2. Copy the HTTPS web url
+3. Run  `git clone [url]`
+### How to Run
+#### Frontend
+1. Open `index.html` in your browser
+#### Backend
+## Team Contributions
+- Aaron:
+- Chris: login/signup, nav and search bar, documentation
+- Jasneet
 ## License
