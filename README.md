@@ -5,7 +5,7 @@ A web-based help desk ticketing system that allows customers to report and track
 
 ## Tech Stack
 - frontend: JavaScript, HTML, CSS
-- backend: 
+- backend: Node.js, Postgres
 
 ## Project Structure
 
@@ -21,7 +21,7 @@ A web-based help desk ticketing system that allows customers to report and track
 1. Open `index.html` in your browser
 #### Backend
 ## Team Contributions
-- Aaron:
+- Aaron: create, my/all tickets page, database, backend setup
 - Chris: login/signup, nav and search bar, documentation
 - Jasneet
 ## License
