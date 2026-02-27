@@ -1,3 +1,6 @@
+import { authenticateUser } from "./userService";
+
+
 document.addEventListener("DOMContentLoaded", () => {
     initForm();
 })
@@ -24,6 +27,9 @@ function initForm() {
         }
 
         // TODO: validate password
+        if (!authenticateUser(email, password)) {
+            alert("Invalid email or password");
+        }
 
 
         // TODO: replace with HTTP cookie header from backend

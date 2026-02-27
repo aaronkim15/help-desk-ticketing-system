@@ -1,3 +1,5 @@
+import { createUser } from "./userService";
+
 document.addEventListener("DOMContentLoaded", () => {
     initForm();
 })
@@ -30,6 +32,7 @@ function initForm() {
         }
 
         // TODO: send POST request to create user account
+        createUser(name, email, password);
 
 
         // TODO: replace with HTTP cookie header from backend
