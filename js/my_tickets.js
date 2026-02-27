@@ -28,7 +28,7 @@ if (active.length === 0){
         <td>${t.subject}</td>
         <td>${t.status}</td>
         <td>${t.priority}</td>
-        <td>${formatDate(t.updateAt)}</td>
+        <td>${formatDate(t.updatedAt)}</td>
         `;
 
         row.addEventListener("click", ()=> {
