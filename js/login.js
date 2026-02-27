@@ -19,8 +19,8 @@ function initForm() {
         }
 
         if (!emailRegex.test(email)) {
-          alert("Please enter a valid email address.");
-          return;
+            alert("Please enter a valid email address.");
+            return;
         }
 
         // TODO: validate password

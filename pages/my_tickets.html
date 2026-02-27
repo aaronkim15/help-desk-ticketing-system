@@ -5,7 +5,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="../css/main.css">
         <script defer src="../js/main.js"></script>
-    <title>Help Desk - Home</title>
+        <script defer src="../js/my_tickets.js"></script>
+    <title>Help Desk - My Tickets</title>
     </head>
     <body>
         <aside>
@@ -49,13 +50,33 @@
                     </ul>
                 </div>
                 <div>
-                    <a class="create-ticket" href="../pages/create.html"><img class="create-icon" src="../assets/plus.svg"></a>
+                    <a class="create-ticket" href="create.html"><img class="create-icon" src="../assets/plus.svg"></a>
                     <!-- <img class="notification-icon" alt="notification icon" src="../assets/notifications_alt.svg"> -->
                     </div>
-                </header>
-                <section class="content">
-                    <!-- Main content goes here -->
-                    </section>
+            </header>
+            <section class="content">
+                <!-- Main content goes here -->
+                <div class="form-card">
+                    <h2 class="page-title"> My Tickets</h2>
+
+                    <div id="emptyState" class="hidden">
+                        No active tickets yet. Create one with the + button.
+                    </div>
+    
+                    <table id="ticketsTable" style="width:100%; border-collapse: collapse;">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Subject</th>
+                                <th>Status</th>
+                                <th>Priority</th>
+                                <th>Updated</th>
+                            </tr>
+                        </thead>
+                        <tbody id="ticketsBody"></tbody>
+                    </table>
+                </div>
+            </section>
         </main>
     </body>
 </html>
