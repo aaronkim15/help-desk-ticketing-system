@@ -20,10 +20,10 @@ A web-based help desk ticketing system that allows customers to report and track
 #### Frontend
 1. Open `index.html` in your browser
 #### Backend
-- cd backend
-- npm install
-- npm run db:setup
-- npm start
+1. cd backend
+2. npm install
+3. npm run db:setup
+4. npm start
 ## Team Contributions
 - Aaron: create, my/all tickets page, database, backend setup
 - Chris: login/signup, nav and search bar, documentation
