@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- IMPORTANT: because this file is in /pages -->
+  <link rel="stylesheet" href="../css/main.css" />
+
+  <!-- IMPORTANT: scripts are also in /js -->
+  <script defer src="../js/main.js"></script>
+  <script defer src="../js/ticket_detail.js"></script>
+
+  <title>Help Desk - Ticket Details</title>
+</head>
+
+<body>
+  <aside>
+    <nav>
+      <section class="nav-main">
+        <div class="logo">He<span>lp</span>Desk</div>
+        <div class="nav-items">
+          <ul>
+            <li><img class="nav-icon inset" src="../assets/home.svg"><a href="../index.html">Dashboard</a></li>
+            <li><img class="nav-icon inset" src="../assets/user.svg"><a href="my_tickets.html">My Tickets</a></li>
+            <li><img class="nav-icon inset" src="../assets/history.svg"><a href="view_tickets.html">History</a></li>
+          </ul>
+          <ul>
+            <li><img class="nav-icon inset" src="../assets/settings.svg"><a href="settings.html">Settings</a></li>
+            <li><img class="nav-icon inset" src="../assets/notifications.svg"><a href="notifications.html">Notifications</a></li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="nav-secondary">
+        <div class="profile inset">
+          <img class="profile-icon" alt="profile icon" src="../assets/profile_alt.svg">
+          <span class="username">John Doe</span>
+        </div>
+        <button id="logout">
+          <img class="nav-icon" alt="logout icon" src="../assets/logout.svg">
+          <span>Logout</span>
+        </button>
+      </section>
+    </nav>
+  </aside>
+
+  <main class="main-content">
+    <header class="content-header">
+      <div class="search-bar-wrapper">
+        <div class="search-bar">
+          <img class="search-icon" alt="search icon" src="../assets/search.svg">
+          <input type="text" placeholder="Find your ticket" class="search-input">
+        </div>
+      </div>
+      <div>
+        <a class="create-ticket" href="create.html"><img class="create-icon" src="../assets/plus.svg"></a>
+      </div>
+    </header>
+
+    <section class="content">
+      <div class="form-card">
+        <h2 class="page-title">Ticket Details</h2>
+
+        <table style="width:100%; border-collapse: collapse;">
+          <tbody>
+            <tr>
+              <th style="padding:12px 14px; text-align:left; border-bottom:1px solid #e2e7f0;">ID</th>
+              <td id="ticketId" style="padding:12px 14px; border-bottom:1px solid #e2e7f0;"></td>
+            </tr>
+            <tr>
+              <th style="padding:12px 14px; text-align:left; border-bottom:1px solid #e2e7f0;">Subject</th>
+              <td id="subject" style="padding:12px 14px; border-bottom:1px solid #e2e7f0;"></td>
+            </tr>
+            <tr>
+              <th style="padding:12px 14px; text-align:left; border-bottom:1px solid #e2e7f0;">Description</th>
+              <td id="description" style="padding:12px 14px; border-bottom:1px solid #e2e7f0;"></td>
+            </tr>
+            <tr>
+              <th style="padding:12px 14px; text-align:left; border-bottom:1px solid #e2e7f0;">Status</th>
+              <td id="status" style="padding:12px 14px; border-bottom:1px solid #e2e7f0;"></td>
+            </tr>
+            <tr>
+              <th style="padding:12px 14px; text-align:left; border-bottom:1px solid #e2e7f0;">Priority</th>
+              <td id="priority" style="padding:12px 14px; border-bottom:1px solid #e2e7f0;"></td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="form-actions">
+          <button type="button" id="cancelBtn" onclick="window.location.href='my_tickets.html'">Back</button>
+        </div>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
