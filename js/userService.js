@@ -1,14 +1,21 @@
 export function getUsers() {
-    return users;
+
+    const allUsers = JSON.parse(localStorage.getItem("users"))
+    
+    return allUsers;
 }
 
 export function getUserById(id) {
-    return users.find(user => user.id === id)
+    const allUsers = JSON.parse(localStorage.getItem("users"))
+
+    return allUsers.find(user => user.id === id)
 }
 
 export function authenticateUser(email, password) {
     // TODO: move logic to backend
-    const user = users.find(user => user.email === email)
+    const allUsers = JSON.parse(localStorage.getItem("users"))
+
+    const user = allUsers.find(user => user.email === email)
 
     if (!user)
         return false;
@@ -23,6 +30,8 @@ export function createUser(name, email, password) {
         email: email,
         password: password,
     })
+
+    localStorage.setItem("users", JSON.stringify(users));
 }
 
 const users = [
@@ -51,3 +60,5 @@ const users = [
         password: "jasneetsingh123",
     },
 ]
+if (!locatlStorage.getItem("users"))
+    localStorage.setItem("users", JSON.stringify(users))

@@ -1,17 +1,25 @@
 export function getTickets() {
-    return tickets;
+    const allTickets = JSON.parse(localStorage.getItem("tickets"))
+
+    return allTickets;
 }
 
 export function getTicketById(id) {
-    return tickets.find(ticket => ticket.id === id)
+    const allTickets = JSON.parse(localStorage.getItem("tickets"))
+
+    return allTickets.find(ticket => ticket.id === id)
 }
 
 export function getUserTickets(userId, role) {
+    const allTickets = JSON.parse(localStorage.getItem("tickets"))
+
+    console.log(allTickets)
+
     if (role == "support") {
-        return tickets.filter(ticket => ticket.assignee_id == userId)
+        return allTickets.filter(ticket => ticket.assignee_id == userId)
     }
     else {
-        return tickets.filter(ticket => ticket.creator_id == userId)
+        return allTickets.filter(ticket => ticket.creator_id == userId)
     }
 }
 
@@ -25,6 +33,10 @@ export function createTicket(userId, subject, status, priority, date) {
         creator_id: userId,
         assignee_id: undefined,
     })
+
+    console.log(tickets)
+
+    localStorage.setItem("tickets", JSON.stringify(tickets))
 }
 
 const tickets = [
@@ -74,3 +86,5 @@ const tickets = [
         creator_id: 3993,
     },
 ]
+if (!localStorage.getItem("tickets"))
+    localStorage.setItem("tickets", JSON.stringify(tickets))
