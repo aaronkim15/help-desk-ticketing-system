@@ -60,5 +60,5 @@ const users = [
         password: "jasneetsingh123",
     },
 ]
-if (!locatlStorage.getItem("users"))
+if (!localStorage.getItem("users"))
     localStorage.setItem("users", JSON.stringify(users))

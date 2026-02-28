@@ -37,6 +37,6 @@ function initForm() {
 
         // TODO: replace with HTTP cookie header from backend
         localStorage.setItem("token", "mock-token")
-        window.location.href = "../pages/index.html"
+        window.location.href = "../index.html"
     })
 }

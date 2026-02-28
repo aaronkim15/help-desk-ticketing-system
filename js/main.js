@@ -6,6 +6,8 @@
  * It also controls the main content, as well as whether a user is logged in or not.
  */
 
+import { getUserTickets } from "./ticketService.js";
+
 
 document.addEventListener("DOMContentLoaded", () => {
     verifyLogin();
@@ -37,8 +39,8 @@ function initSearchBar() {
         }
 
         // TODO: replace with GET request to backend to fetch matching tickets
-        const tickets = ["Fix bug", "Add feature", "Update documentation"];
-        const filteredTickets = tickets.filter(ticket => ticket.toLowerCase().includes(query));
+        const tickets = getUserTickets(4567, "customer");
+        const filteredTickets = tickets.filter(ticket => ticket.subject.toLowerCase().includes(query));
                 
         if (filteredTickets.length === 0) {
             resultsUI.replaceChildren()
@@ -54,7 +56,7 @@ function initSearchBar() {
             
             for (let ticket of filteredTickets) {
                 const listItem = document.createElement("li")
-                listItem.textContent = ticket;
+                listItem.textContent = ticket.subject;
 
                 // TODO: add eventListener to redirect to ticket detail page
                 
