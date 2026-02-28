@@ -1,3 +1,5 @@
+import { createTicket } from "./ticketService.js";
+
 const form = document.getElementById("createTicketForm");
 const cancelBtn = document.getElementById("cancelBtn");
 
@@ -37,6 +39,7 @@ form.addEventListener("submit", (e)=> {
     };
 
     tickets.push(newTicket);
+    createTicket(newId, subject, "Open", priority, new Date().toISOString())
 
     localStorage.setItem("tickets", JSON.stringify(tickets));
 

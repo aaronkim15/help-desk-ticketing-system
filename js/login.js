@@ -1,4 +1,4 @@
-import { authenticateUser } from "./userService";
+import { authenticateUser } from "./userService.js";
 
 
 document.addEventListener("DOMContentLoaded", () => {

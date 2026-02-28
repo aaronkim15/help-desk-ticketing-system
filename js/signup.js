@@ -1,4 +1,4 @@
-import { createUser } from "./userService";
+import { createUser } from "./userService.js";
 
 document.addEventListener("DOMContentLoaded", () => {
     initForm();
