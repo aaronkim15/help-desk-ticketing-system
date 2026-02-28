@@ -29,6 +29,7 @@ function initForm() {
         // TODO: validate password
         if (!authenticateUser(email, password)) {
             alert("Invalid email or password");
+            return
         }
 
 
