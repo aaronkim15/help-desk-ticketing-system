@@ -8,10 +8,10 @@ export function getTicketById(id) {
 
 export function getUserTickets(userId, role) {
     if (role == "support") {
-        return tickets.findAll(ticket => ticket.assignee_id == userId)
+        return tickets.filter(ticket => ticket.assignee_id == userId)
     }
     else {
-        return tickets.findAll(ticket => ticket.creator_id == userId)
+        return tickets.filter(ticket => ticket.creator_id == userId)
     }
 }
 
