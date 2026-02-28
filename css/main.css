@@ -216,7 +216,7 @@ a:has(.create-icon) {
     height: 100%;
     display: flex;
     flex-direction: column;
-    gap: 14px;
+    
 }
 
 .page-title {

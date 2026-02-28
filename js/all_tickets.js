@@ -35,7 +35,6 @@ if (active.length === 0){
             window.location.href = `ticket_detail.html?id=${t.id}`;
         });
 
-
         body.appendChild(row);
     });
 }

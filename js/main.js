@@ -7,8 +7,6 @@
  */
 
 
-
-
 document.addEventListener("DOMContentLoaded", () => {
     verifyLogin();
     initNavBar();
@@ -23,7 +21,6 @@ function verifyLogin() {
         window.location.replace("../pages/login.html")
     }
 }
-
 
 function initSearchBar() {
     const searchInput = document.querySelector(".search-input");

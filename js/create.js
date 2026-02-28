@@ -2,18 +2,25 @@ import { createTicket } from "./ticketService.js";
 
 const form = document.getElementById("createTicketForm");
 const cancelBtn = document.getElementById("cancelBtn");
-
+const formMessage = document.getElementById("formMessage");
 
 cancelBtn.addEventListener("click", ()=> {
     window.location.href = "index.html";
 });
+
+function formatDate(d) {
+    const day = String(d.getDate()).padStart(2, "0");
+    const monthNames = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+    const mon = monthNames[d.getMonth()];
+    const year = d.getFullYear();
+    return `${day} ${mon} ${year}`;
+}
 
 form.addEventListener("submit", (e)=> {
     e.preventDefault();
 
     const subject = document.getElementById("subject").value.trim();
     const description = document.getElementById("description").value.trim();
-    const category = document.getElementById("category").value;
     const priority = document.getElementById("priority").value;
 
     if(!subject || !description){
@@ -21,29 +28,15 @@ form.addEventListener("submit", (e)=> {
         return;
     }
 
-    const tickets = JSON.parse(localStorage.getItem("tickets")) || [];
+    const TEST_USER_ID = 4567;
 
-    const newId = tickets.length > 0
-        ? Math.max(...tickets.map(t => t.id)) + 1
-        : 1000;
+    createTicket(TEST_USER_ID, subject, "Open", priority, formatDate(new Date()));
 
-    const newTicket = {
-        id: newId,
-        subject,
-        description,
-        category,
-        priority,
-        status: "Open",
-        createdAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString()
-    };
+    if (formMessage){
+        formMessage.textContent = "Ticket created (service method).";
+        formMessage.classList.remove("hidden");
+    }
 
-    tickets.push(newTicket);
-    createTicket(newId, subject, "Open", priority, new Date().toISOString())
-
-    localStorage.setItem("tickets", JSON.stringify(tickets));
-
-    console.log("tickets in storage now:", JSON.parse(localStorage.getItem("tickets")));
-    window.location.href = "index.html"; //subject to change
+    window.location.href = "index.html";
 });
 
