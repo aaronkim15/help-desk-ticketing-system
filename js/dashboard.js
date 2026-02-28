@@ -7,19 +7,21 @@ document.addEventListener("DOMContentLoaded", () => {
 function initData() {
     // TODO: get user ID from auth cookie/token
     const tickets = getUserTickets(4567, "customer");
-    const pastTickets = tickets.filter(ticket => ticket.status == "Resolved" || ticket.status == "Closed")
+    const activeTickets = tickets.filter(ticket => ticket.status != "Resolved" && ticket.status != "Closed")
+
+    console.log(tickets)
 
     const empty = document.getElementById("emptyState");
     const table = document.getElementById("ticketsTable");
     const body = document.getElementById("ticketsBody");
     
-    if (pastTickets.length === 0) {
+    if (activeTickets.length === 0) {
         empty.classList.remove("hidden"); 
         table.classList.add("hidden");
     }
     else {
 
-        pastTickets.forEach(ticket => {
+        activeTickets.forEach(ticket => {
             const row = document.createElement("tr");
 
             const id = document.createElement("td");

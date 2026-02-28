@@ -37,6 +37,6 @@ form.addEventListener("submit", (e)=> {
         formMessage.classList.remove("hidden");
     }
 
-    window.location.href = "index.html";
+    window.location.href = "../index.html";
 });
 

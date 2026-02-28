@@ -4,7 +4,8 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="../css/main.css">
-        <script defer src="../js/main.js"></script>
+        <script defer src="./js/main.js"></script>
+        <script defer type="module" src="./js/dashboard.js"></script>
     <title>Help Desk - Home</title>
     </head>
     <body>
@@ -15,12 +16,12 @@
                 <div class="nav-items">
                     <ul>
                         <li><img class="nav-icon inset" src="../assets/home.svg"><a href="index.html">Dashboard</a></li>
-                        <li id="all-tickets"><img class="nav-icon inset" src="../assets/user.svg"><a href="all_tickets.html">All Tickets</a></li>
-                        <li><img class="nav-icon inset" src="../assets/history.svg"><a href="../pages/history.html">History</a></li>
+                        <li id="all-tickets"><img class="nav-icon inset" src="../assets/user.svg"><a href="./pages/all_tickets.html">All Tickets</a></li>
+                        <li><img class="nav-icon inset" src="../assets/history.svg"><a href="./pages/history.html">History</a></li>
                     </ul>
                     <ul>
-                        <li><img class="nav-icon inset" src="../assets/settings.svg"><a href="settings.html">Settings</a></li>
-                        <li><img class="nav-icon inset" src="../assets/notifications.svg"><a href="notifications.html">Notifications</a></li>
+                        <li><img class="nav-icon inset" src="../assets/settings.svg"><a href="./pages/settings.html">Settings</a></li>
+                        <li><img class="nav-icon inset" src="../assets/notifications.svg"><a href="./pages/notifications.html">Notifications</a></li>
                     </ul>
                 </div>
             </section>
@@ -55,7 +56,27 @@
                 </header>
                 <section class="content">
                     <!-- Main content goes here -->
-                    </section>
+                     <div class="form-card">
+                        <h2 class="page-title">Active Tickets</h2>
+
+                        <div id="emptyState" class="hidden">
+                            You haven't created any tickets. Create one with the + button.
+                        </div>
+        
+                        <table id="ticketsTable" style="width:100%; border-collapse: collapse;">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Subject</th>
+                                    <th>Status</th>
+                                    <th>Priority</th>
+                                    <th>Updated</th>
+                                </tr>
+                            </thead>
+                            <tbody id="ticketsBody"></tbody>
+                        </table>
+                    </div>
+                </section>
         </main>
     </body>
 </html>
