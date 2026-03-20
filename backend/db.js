@@ -3,9 +3,9 @@ const { Pool } = require("pg");
 
 const pool = new Pool({
     host: "localhost",
-    user: "aaronkim", //change to local postgres username
-    password: "", //change to local postgres password
-    database: "helpdesk", // helpdesk database.
+    user: process.env.DB_USER, //change to local postgres username
+    password: process.env.DB_PASSWORD, //change to local postgres password
+    database: process.env.DB_NAME, // helpdesk database.
     port: 5432,
 });
 

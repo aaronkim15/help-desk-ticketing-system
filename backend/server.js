@@ -1,4 +1,5 @@
 // backend/server.js
+require('dotenv').config()
 const http = require("http");
 const pool = require("./db");
 const ticketsRouter = require("./routes/tickets");
