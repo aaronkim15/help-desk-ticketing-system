@@ -12,15 +12,15 @@ A web-based help desk ticketing system that allows customers to report and track
 ## Getting Started
 ### Prerequisites
 - Git
-- `npx serve`
+- `npx vite`
 ### Installation
 1. Click the green "Code" button on the repository
 2. Copy the HTTPS web url
 3. Run  `git clone [url]`
 ### How to Run
 #### Frontend
-1. In the main project directory, run `npx serve`
-2. Open `localhost:3030` or as specified by `npx serve`
+1. In the main project directory, run `npx vite`
+2. Open `localhost:5467` or as specified by `npx vite`
 #### Backend
 1. cd backend
 2. npm install
