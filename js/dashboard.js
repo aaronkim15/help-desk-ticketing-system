@@ -32,7 +32,7 @@ function initData() {
             const date = document.createElement("td");
 
             idLink.textContent = `#${ticket.id}`
-            idLink.href = `../pages/ticket_detail.html?id=${ticket.id}`
+            idLink.href = `../pages/ticket_detail.html?id=${ticket.id}&from=/`
             id.appendChild(idLink)
 
             subject.textContent = ticket.subject;

@@ -6,6 +6,21 @@ document.addEventListener("DOMContentLoaded", function() {
 
     const params = new URLSearchParams(window.location.search);
     const ticketId = params.get("id");
+    const from = params.get("from")
+
+    const backBtn = document.querySelector("#backBtn")
+
+    backBtn.addEventListener("click", () => {
+        if (from) {
+            if (from === "/")
+                window.location.href = "/"
+            else
+                window.location.href = `/pages/${from}.html`
+        } else {
+            window.location.href = "/"
+        }
+    })
+
 
     const tickets = getTickets();
 
