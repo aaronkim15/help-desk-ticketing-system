@@ -26,6 +26,7 @@ function verifyLogin() {
 
 function initSearchBar() {
     const searchInput = document.querySelector(".search-input");
+    const searchBar = document.querySelector(".search-bar")
     searchInput.addEventListener("input", (event) => {
         const query = event.target.value.toLowerCase();
         const resultsUI = document.querySelector(".search-results")
@@ -33,9 +34,11 @@ function initSearchBar() {
         
         if (query.length === 0) {
             resultsUI.classList.add("hidden")
+            searchBar.classList.remove("flatten-base")
         }
         else {
             resultsUI.classList.remove("hidden")
+            searchBar.classList.add("flatten-base")
         }
 
         // TODO: replace with GET request to backend to fetch matching tickets
@@ -58,7 +61,7 @@ function initSearchBar() {
                 const listItem = document.createElement("li")
                 listItem.textContent = ticket.subject;
 
-                // TODO: add eventListener to redirect to ticket detail page
+                listItem.addEventListener("click", () => window.location.href = `/pages/ticket_detail.html?id=${ticket.id}`)
                 
                 resultsUI.appendChild(listItem)
             }

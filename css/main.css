@@ -166,8 +166,20 @@ nav ul li:hover {
     list-style: none;
 }
 
+.search-results:hover {
+    cursor: pointer;
+}
+
 .search-results li {
     padding: 4px 8px;
+}
+.search-results li:hover {
+    background-color: #e6e9ec;
+}
+
+.flatten-base {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
 }
 
 .hidden {

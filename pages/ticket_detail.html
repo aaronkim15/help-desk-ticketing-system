@@ -8,7 +8,7 @@
   <link rel="stylesheet" href="../css/main.css" />
 
   <!-- IMPORTANT: scripts are also in /js -->
-  <script defer src="../js/main.js"></script>
+  <script defer src="../js/main.js" type="module"></script>
   <script defer src="../js/ticket_detail.js"></script>
 
   <title>Help Desk - Ticket Details</title>
@@ -52,6 +52,9 @@
           <img class="search-icon" alt="search icon" src="../assets/search.svg">
           <input type="text" placeholder="Find your ticket" class="search-input">
         </div>
+        <ul class="search-results hidden">
+          <li></li>
+        </ul>
       </div>
       <div>
         <a class="create-ticket" href="create.html"><img class="create-icon" src="../assets/plus.svg"></a>
