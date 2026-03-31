@@ -31,4 +31,31 @@ async function signup(name, email, password, isCustomer = true) {
     }
 }
 
-module.exports = { signup };
+async function authenticateUser(email, password) {
+    try {
+
+        // Fetch user by email
+        const result = await pool.query(
+            `SELECT * FROM "user" WHERE email = $1`,
+            [email]
+        );
+
+        if (result.rows.length === 0) {
+            throw new Error("USER_NOT_FOUND");
+        }
+
+        const user = result.rows[0];
+        const isMatch = await bcrypt.compare(password, user.password);
+
+        if (!isMatch) {
+            throw new Error("INVALID_CREDENTIALS");
+        }
+
+        return user;
+
+    } catch (err) {
+        throw err
+    }
+}
+
+module.exports = { signup, authenticateUser };

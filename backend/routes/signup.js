@@ -1,7 +1,7 @@
 const { signup } = require("../services/userService.js");
 
 
-async function signupRouter(req, res) {
+function signupRouter(req, res) {
 
     if (req.url === "/signup" && req.method === "POST") {
       // Handle user signup logic here
@@ -38,8 +38,8 @@ async function signupRouter(req, res) {
             res.end(JSON.stringify({ message: "There was an error signing up the user" }));
           }
         }
-        return true; // route handled
       });
+      return true; // route handled
     }
     return false; // not matching route - not handled
 }
