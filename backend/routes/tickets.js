@@ -1,5 +1,5 @@
 // backend/routes/tickets.js
-const { listTickets, getTicketById } = require("../controllers/ticketController");
+const { listTickets, getTicketById } = require("../services/ticketService");
 
 function ticketsRouter(req, res) {
   // GET /tickets
