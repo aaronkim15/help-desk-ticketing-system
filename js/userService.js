@@ -23,7 +23,24 @@ export function authenticateUser(email, password) {
     return user.password === password;
 }
 
-export function createUser(name, email, password) {
+export async function createUser(name, email, password) {
+
+    const response = await fetch('http://localhost:4000/signup', {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ name, email, password })
+    });
+
+    const data = await response.json();
+
+    console.log(data)
+
+    if (!response.ok) {
+        return false
+    }
+
     users.push({
         id: users.at(-1).id + 1,
         name: name,
@@ -32,6 +49,8 @@ export function createUser(name, email, password) {
     })
 
     localStorage.setItem("users", JSON.stringify(users));
+
+    return true;
 }
 
 const users = [

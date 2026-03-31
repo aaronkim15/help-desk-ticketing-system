@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", () => {
 function initForm() {
     const form = document.getElementById("signup")
 
-    form.addEventListener("submit", (e) => {
+    form.addEventListener("submit", async (e) => {
         e.preventDefault()
 
         const name = form.name.value.trim();
@@ -32,11 +32,14 @@ function initForm() {
         }
 
         // TODO: send POST request to create user account
-        createUser(name, email, password);
+        const result = await createUser(name, email, password);
+
+        if (result) {
+            // TODO: replace with HTTP cookie header from backend
+            localStorage.setItem("token", "mock-token")
+            window.location.href = "../index.html"
+        }
 
 
-        // TODO: replace with HTTP cookie header from backend
-        localStorage.setItem("token", "mock-token")
-        window.location.href = "../index.html"
     })
 }

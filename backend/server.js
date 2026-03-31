@@ -3,6 +3,7 @@ require('dotenv').config()
 const http = require("http");
 const pool = require("./db");
 const ticketsRouter = require("./routes/tickets");
+const { signupRouter } = require("./routes/signup");
 
 function sendJson(res, status, obj) {
     res.writeHead(status, { "Content-Type": "application/json" });
@@ -10,6 +11,18 @@ function sendJson(res, status, obj) {
 }
 
 const server = http.createServer(async (req, res) => {
+
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+
+    // Handle preflight requests
+    if (req.method === 'OPTIONS') {
+        res.writeHead(204);
+        res.end();
+        return;
+    }
+
   // Health check
     if (req.url === "/health" && req.method === "GET") {
         return sendJson(res, 200, { ok: true });
@@ -26,10 +39,12 @@ const server = http.createServer(async (req, res) => {
     }
 
   // Tickets routes
-    const handled = ticketsRouter(req, res);
-    if (handled !== false) return;
-
-    return sendJson(res, 404, { error: "Not found" });
+    const handled = ticketsRouter(req, res)
+        || signupRouter(req, res);
+    if (!handled) {
+        res.writeHead(404);
+        res.end('Not found');
+    }
 });
 
 server.listen(4000, () => {
