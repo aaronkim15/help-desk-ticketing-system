@@ -11,16 +11,22 @@ export function getUserById(id) {
     return allUsers.find(user => user.id === id)
 }
 
-export function authenticateUser(email, password) {
-    // TODO: move logic to backend
-    const allUsers = JSON.parse(localStorage.getItem("users"))
+export async function authenticateUser(email, password) {
+    const response = await fetch('http://localhost:4000/login', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ email, password })
+    });
 
-    const user = allUsers.find(user => user.email === email)
+    let data = await response.json();
+    
+    if (!response.ok) {
+        data = null;
+    }
 
-    if (!user)
-        return false;
-
-    return user.password === password;
+    return data;
 }
 
 export async function createUser(name, email, password) {
@@ -51,6 +57,22 @@ export async function createUser(name, email, password) {
     localStorage.setItem("users", JSON.stringify(users));
 
     return true;
+}
+
+export function getValidToken() {
+    const token = localStorage.getItem('token');
+    if (!token) return null;
+
+    try {
+        const payload = JSON.parse(atob(token.split('.')[1]));
+        if (payload.exp * 1000 < Date.now()) {
+            localStorage.removeItem('token');
+            return null;
+        }
+        return payload;
+    } catch {
+        return null;
+    }
 }
 
 const users = [

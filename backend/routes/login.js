@@ -10,16 +10,18 @@ function loginRouter(req, res) {
         });
         req.on('end', async () => {
             try {
-                console.log(body)
                 const { email, password } = JSON.parse(body);
 
-                console.log('calling authenticateUser');
                 const result = await authenticateUser(email, password);
-                console.log('authenticateUser returned', result);
 
                 if (result) {
                     res.writeHead(200, { "Content-Type": "application/json" });
-                    res.end(JSON.stringify({ message: "User logged in successfully", user_id: result.user_id }));
+                    res.end(JSON.stringify({ 
+                        message: "User logged in successfully", 
+                        user_id: result.user.user_id, 
+                        token: result.token, 
+                        role: result.user.role 
+                    }));
                 }
 
             } catch (error) {

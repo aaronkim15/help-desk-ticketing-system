@@ -1,5 +1,6 @@
 const pool = require("../db");
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 
 async function signup(name, email, password, isCustomer = true) {
     try {
@@ -51,7 +52,16 @@ async function authenticateUser(email, password) {
             throw new Error("INVALID_CREDENTIALS");
         }
 
-        return user;
+        const token = jwt.sign(
+            {
+                user_id: user.user_id, role: user.role
+            },
+            process.env.JWT_SECRET,
+            { expiresIn: "1d" }
+            
+        );
+
+        return { user, token };
 
     } catch (err) {
         throw err

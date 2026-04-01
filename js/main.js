@@ -7,6 +7,7 @@
  */
 
 import { getUserTickets } from "./ticketService.js";
+import { getValidToken } from "./userService.js";
 
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -18,7 +19,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 function verifyLogin() {
     // TODO: replace with cookie header check
-    const token = localStorage.getItem("token")
+    const token = getValidToken();
     if (!token) {
         window.location.replace("../pages/login.html")
     }
@@ -73,8 +74,9 @@ function initLogoutButton() {
     const logoutButton = document.getElementById("logout");
 
     logoutButton.addEventListener("click", (e) => {
-        // TODO: replace with proper logout
         localStorage.removeItem("token");
+        localStorage.removeItem("user_id");
+        localStorage.removeItem("role");
         window.location.replace("../pages/login.html")
     })
 }

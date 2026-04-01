@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", () => {
 function initForm() {
     const form = document.getElementById("login")
 
-    form.addEventListener("submit", (e) => {
+    form.addEventListener("submit", async (e) => {
         e.preventDefault()
 
         const email = form.email.value.trim();
@@ -27,14 +27,18 @@ function initForm() {
         }
 
         // TODO: validate password
-        if (!authenticateUser(email, password)) {
+        const userData = await authenticateUser(email, password);
+
+        if (!userData) {
             alert("Invalid email or password");
             return
         }
-
+        console.log("User data:", userData)
 
         // TODO: replace with HTTP cookie header from backend
-        localStorage.setItem("token", "mock-token")
+        localStorage.setItem("token", userData.token);
+        localStorage.setItem('user_id', userData.user_id);
+        localStorage.setItem('role', userData.role);
         window.location.href = "../index.html"
     })
 }
