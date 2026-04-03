@@ -40,8 +40,10 @@ const server = http.createServer(async (req, res) => {
     }
 
   // Tickets routes
-    const handled = signupRouter(req, res)
-        || loginRouter(req, res);
+    const handled = 
+        signupRouter(req,res) ||
+        loginRouter(req,res) ||
+        ticketsRouter(req, res);
 
     console.log("handled:", handled)
 

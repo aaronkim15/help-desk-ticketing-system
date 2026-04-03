@@ -10,7 +10,7 @@ CREATE TABLE "user" (
   role VARCHAR(20) NOT NULL CHECK (role IN ('support','customer'))
 );
 
-CREATE TABLE ticket (
+CREATE TABLE tickets (
   ticket_id SERIAL PRIMARY KEY,
   subject VARCHAR(200) NOT NULL,
   description TEXT NOT NULL,

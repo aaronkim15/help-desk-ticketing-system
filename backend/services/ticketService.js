@@ -1,39 +1,79 @@
-// backend/controllers/ticketController.js
+// backend/services/ticketService.js
 const pool = require("../db");
 
-async function listTickets(req, res) {
-    try {
-    // listTickets
+async function getTicketHistoryByUser(userId) {
     const result = await pool.query(
-    "SELECT ticket_id, subject, status, priority, updated_on FROM ticket ORDER BY updated_on DESC"
+        `
+        SELECT *
+        FROM ticket
+        WHERE creator_id = $1
+        AND status IN ('resolved', 'closed')
+        ORDER BY updated_on DESC, created_on DESC
+        `,
+        [userId]
     );
-    res.writeHead(200, { "Content-Type": "application/json" });
-    res.end(JSON.stringify(result.rows));
-} catch (err) {
-    res.writeHead(500, { "Content-Type": "application/json" });
-    res.end(JSON.stringify({ error: err.message }));
-}
+
+    return result.rows;
 }
 
-async function getTicketById(req, res, ticketId) {
-try {
+async function getActiveTicketsByUser(userId) {
     const result = await pool.query(
-        "SELECT * FROM ticket WHERE ticket_id = $1",
+        `
+        SELECT *
+        FROM ticket
+        WHERE creator_id = $1
+        AND status IN ('unassigned', 'assigned', 'in_progress')
+        ORDER BY created_on DESC
+        `,
+        [userId]
+    );
+
+    return result.rows;
+}
+
+async function getTicketById(ticketId) {
+    const result = await pool.query(
+        `
+        SELECT *
+        FROM ticket
+        WHERE ticket_id = $1
+        `,
         [ticketId]
     );
 
     if (result.rows.length === 0) {
-        res.writeHead(404, { "Content-Type": "application/json" });
-        res.end(JSON.stringify({ error: "Ticket not found" }));
-        return;
+        throw new Error("TICKET_NOT_FOUND");
     }
 
-    res.writeHead(200, { "Content-Type": "application/json" });
-    res.end(JSON.stringify(result.rows[0]));
-} catch (err) {
-    res.writeHead(500, { "Content-Type": "application/json" });
-    res.end(JSON.stringify({ error: err.message }));
-}
+    return result.rows[0];
 }
 
-module.exports = { listTickets, getTicketById };
+async function createTicket(subject, description, priority, creatorId) {
+    if (!subject || !description || !creatorId) {
+        throw new Error("MISSING_REQUIRED_FIELDS");
+    }
+
+    const validPriorities = ["low", "medium", "high", "urgent"];
+
+    if (priority && !validPriorities.includes(priority)){
+        throw new Error("INVALID_PRIORITY");
+    }
+    
+    const result = await pool.query(
+        `
+        INSERT INTO ticket (subject, description, status, priority, creator_id)
+        VALUES ($1, $2, 'unassigned', $3, $4)
+        RETURNING *
+        `,
+        [subject, description, priority || "medium", creatorId]
+    );
+
+    return result.rows[0];
+}
+
+module.exports = {
+    getTicketHistoryByUser,
+    getActiveTicketsByUser,
+    getTicketById,
+    createTicket,
+};
