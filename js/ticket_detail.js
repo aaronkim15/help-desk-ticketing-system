@@ -1,14 +1,14 @@
+import { getTicketById } from "./ticketService.js";
+
 document.addEventListener("DOMContentLoaded", function() {
 
-    function getTickets(){
-        return JSON.parse(localStorage.getItem("tickets")) || [];
-    }
 
     const params = new URLSearchParams(window.location.search);
     const ticketId = params.get("id");
     const from = params.get("from")
 
     const backBtn = document.querySelector("#backBtn")
+    const editBtn = document.querySelector("#editBtn")
 
     backBtn.addEventListener("click", () => {
         if (from) {
@@ -21,10 +21,16 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     })
 
+    editBtn.addEventListener("click", () => {
+        if (from) {
+            window.location.href = `/pages/edit_ticket.html?id=${ticketId}&from=${from}`
+        } else {
+            window.location.href = `/pages/edit_ticket.html?id=${ticketId}`
+        }
+    }); 
 
-    const tickets = getTickets();
 
-    const ticket = tickets.find(t => String(t.id) === String(ticketId));
+    const ticket = getTicketById(parseInt(ticketId));
 
     if (!ticket) {
         document.querySelector(".form-card").innerHTML =
