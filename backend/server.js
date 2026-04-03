@@ -4,7 +4,7 @@ const http = require("http");
 const pool = require("./db");
 const ticketsRouter = require("./routes/tickets");
 const { signupRouter } = require("./routes/signup");
-const {loginRouter} = require("./routes/login");
+const { loginRouter } = require("./routes/login");
 
 function sendJson(res, status, obj) {
     res.writeHead(status, { "Content-Type": "application/json" });
@@ -39,7 +39,7 @@ const server = http.createServer(async (req, res) => {
         }
     }
 
-  // Tickets routes
+  // Route handling
     const handled = 
         signupRouter(req,res) ||
         loginRouter(req,res) ||

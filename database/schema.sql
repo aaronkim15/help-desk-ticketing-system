@@ -1,4 +1,5 @@
 DROP TABLE IF EXISTS note;
+DROP TABLE IF EXISTS tickets;
 DROP TABLE IF EXISTS ticket;
 DROP TABLE IF EXISTS "user";
 
@@ -10,7 +11,7 @@ CREATE TABLE "user" (
   role VARCHAR(20) NOT NULL CHECK (role IN ('support','customer'))
 );
 
-CREATE TABLE tickets (
+CREATE TABLE ticket (
   ticket_id SERIAL PRIMARY KEY,
   subject VARCHAR(200) NOT NULL,
   description TEXT NOT NULL,

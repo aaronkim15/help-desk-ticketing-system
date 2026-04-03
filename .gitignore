@@ -3,6 +3,7 @@ node_modules/
 
 # Environmental variables
 .env
+backend/.env
 
 # Mac 
 .DS_Store

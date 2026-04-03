@@ -1,5 +1,17 @@
 {
+  "name": "helpdesk-backend",
+  "version": "1.0.0",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "db:create": "createdb helpdesk || true",
+    "db:schema": "psql -U $DB_USER -d helpdesk -f ../database/schema.sql",
+    "db:setup": "npm run db:create && npm run db:schema"
+  },
   "dependencies": {
-    "jsonwebtoken": "^9.0.3"
+    "bcrypt": "^5.1.1",
+    "dotenv": "^17.2.2",
+    "jsonwebtoken": "^9.0.3",
+    "pg": "^8.16.3"
   }
 }
