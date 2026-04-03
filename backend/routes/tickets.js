@@ -95,6 +95,11 @@ function ticketsRouter(req, res) {
         if (error.message === "MISSING_REQUIRED_FIELDS") {
           res.writeHead(400, { "Content-Type": "application/json" });
           res.end(JSON.stringify({ message: "Missing required fields" }));
+        }
+        else if(error.message === "INVALID_PRIORITY"){
+          res.writeHead(400, {"Content-Type": "application/json" });
+          res.end(JSON.stringify({ message: "Invalid priority value" }));
+        
         } else {
           res.writeHead(500, { "Content-Type": "application/json" });
           res.end(JSON.stringify({ message: "Failed to create ticket" }));

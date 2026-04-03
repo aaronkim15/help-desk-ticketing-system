@@ -23,7 +23,7 @@ async function getActiveTicketsByUser(userId) {
         FROM ticket
         WHERE creator_id = $1
         AND status IN ('unassigned', 'assigned', 'in_progress')
-        ORDER BY created_on DESC
+        ORDER BY updated_on DESC, created_on DESC
         `,
         [userId]
     );
@@ -58,7 +58,7 @@ async function createTicket(subject, description, priority, creatorId) {
     if (priority && !validPriorities.includes(priority)){
         throw new Error("INVALID_PRIORITY");
     }
-    
+
     const result = await pool.query(
         `
         INSERT INTO ticket (subject, description, status, priority, creator_id)
