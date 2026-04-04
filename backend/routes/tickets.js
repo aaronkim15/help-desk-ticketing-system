@@ -5,6 +5,7 @@ const {
   getTicketById,
   createTicket,
   updateTicket,
+  deleteTicket,
 } = require("../services/ticketService");
 
 function ticketsRouter(req, res) {
@@ -111,6 +112,28 @@ function ticketsRouter(req, res) {
         }
       });
 
+
+    return true;
+  }
+
+  if (ticketMatch && req.method === "DELETE") {
+    const ticketId = parseInt(ticketMatch[1], 10);
+
+    (async () => {
+      try {
+        await deleteTicket(ticketId);
+        res.writeHead(200, { "Content-Type": "application/json" });
+        res.end(JSON.stringify({ message: "Ticket deleted successfully" }));
+      } catch (error) {
+        if (error.message === "TICKET_NOT_FOUND") {
+          res.writeHead(404, { "Content-Type": "application/json" });
+          res.end(JSON.stringify({ message: "Ticket not found" }));
+        } else {
+          res.writeHead(500, { "Content-Type": "application/json" });
+          res.end(JSON.stringify({ message: "Failed to delete ticket" }));
+        }
+      }
+    })();
 
     return true;
   }

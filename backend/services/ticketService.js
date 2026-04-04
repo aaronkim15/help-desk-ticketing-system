@@ -96,10 +96,28 @@ async function updateTicket(ticketId, fields) {
     return result.rows[0];
 }
 
+async function deleteTicket(ticketId) {
+    const result = await pool.query(
+        `
+        DELETE FROM ticket
+        WHERE ticket_id = $1
+        RETURNING *
+        `,
+        [ticketId]
+    );
+
+    if (result.rows.length === 0) {
+        throw new Error("TICKET_NOT_FOUND");
+    }
+
+    return result.rows[0];
+}
+
 module.exports = {
     getTicketHistoryByUser,
     getActiveTicketsByUser,
     getTicketById,
     createTicket,
     updateTicket,
+    deleteTicket,
 };
