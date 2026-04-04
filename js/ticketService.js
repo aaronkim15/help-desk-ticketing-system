@@ -39,6 +39,35 @@ export function createTicket(userId, subject, status, priority, date) {
     localStorage.setItem("tickets", JSON.stringify(tickets))
 }
 
+export async function updateTicket(ticketId, subject, description, priority, status) {
+    try {
+
+        const result = await fetch(`/tickets/${ticketId}`, {
+            method: "PATCH",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                subject,
+                description,
+                priority,
+                status,
+            }),
+        });
+    
+        const data = await result.json();
+    
+        if (!result.ok) {
+            throw new Error(data.message || "Failed to update ticket");
+        }
+        
+         return data;
+    } catch (error) {
+        console.error("Error updating ticket:", error);
+        return null;
+    }
+}
+
 const tickets = [
     {
         id: 19283455,

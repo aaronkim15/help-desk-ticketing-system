@@ -4,6 +4,7 @@ const {
   getActiveTicketsByUser,
   getTicketById,
   createTicket,
+  updateTicket,
 } = require("../services/ticketService");
 
 function ticketsRouter(req, res) {
@@ -62,6 +63,54 @@ function ticketsRouter(req, res) {
         }
       }
     })();
+
+    return true;
+  }
+
+  if (ticketMatch && req.method === "PATCH") {
+      const ticketId = parseInt(ticketMatch[1], 10);
+
+      let body = "";
+
+      req.on("data", (chunk) => {
+        body += chunk.toString();
+      });
+
+      req.on("end", async () => {
+        try {
+          const fields = JSON.parse(body);
+
+          const allowedFields = ["subject", "description", "priority", "status"];
+
+          const validFields = Object.entries(fields).filter(([key]) => allowedFields.includes(key));
+
+          if (validFields.length === 0) {
+            throw new Error("MISSING_REQUIRED_FIELDS");
+          }
+
+          const updatedTicket = await updateTicket(ticketId, validFields);
+
+          res.writeHead(200, { "Content-Type": "application/json" });
+          res.end(
+            JSON.stringify({
+              message: "Ticket updated successfully",
+              ticket: updatedTicket,
+            })
+          );
+        } catch (error) {
+          if (error.message === "TICKET_NOT_FOUND") {
+            res.writeHead(404, { "Content-Type": "application/json" });
+            res.end(JSON.stringify({ message: "Ticket not found" }));
+          } else if (error.message === "MISSING_REQUIRED_FIELDS") {
+            res.writeHead(400, { "Content-Type": "application/json" });
+            res.end(JSON.stringify({ message: "Missing required fields" }));
+          } else {
+            res.writeHead(500, { "Content-Type": "application/json" });
+            res.end(JSON.stringify({ message: "Failed to update ticket" }));
+          }
+        }
+      });
+
 
     return true;
   }

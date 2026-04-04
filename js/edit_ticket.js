@@ -1,4 +1,4 @@
-import { getTicketById } from "./ticketService.js";
+import { getTicketById, updateTicket } from "./ticketService.js";
 
 document.addEventListener("DOMContentLoaded", function() {
 
@@ -27,5 +27,20 @@ document.addEventListener("DOMContentLoaded", function() {
     document.querySelector("#description textarea").value = ticket.description || "";
     document.querySelector("#status select").value = ticket.status || "-";
     document.querySelector("#priority select").value = ticket.priority || "-";
+
+    const saveBtn = document.querySelector("#saveBtn");
+
+    saveBtn.addEventListener("click", async () => {
+        const subject = document.querySelector("#subject input").value;
+        const description = document.querySelector("#description textarea").value;
+        const status = document.querySelector("#status select").value;
+        const priority = document.querySelector("#priority select").value;
+
+        const updatedTicket = await updateTicket(parseInt(ticketId), subject, description, priority, status);
+
+        if (updatedTicket) {
+            window.location.href = `/pages/ticket_detail.html?id=${ticketId}&from=${from}`;
+        }
+    });
 
 });
