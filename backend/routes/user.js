@@ -4,15 +4,12 @@ function userRouter(req, res) {
 
     const userMatch = req.url.match(/^\/users\/(\d+)$/);
 
-    console.log("userMatch:", userMatch, req.url)
-
     if (userMatch && req.method === "GET") {
         const userId = parseInt(userMatch[1], 10);
 
         (async () => {
             try {
                 const {name, email, role} = await getUserById(userId);
-                console.log("HERE NOW", name, email, role)
                 res.writeHead(200, { "Content-Type": "application/json" });
                 res.end(JSON.stringify({ user_id: userId, name, email, role }));
             } catch (error) {
