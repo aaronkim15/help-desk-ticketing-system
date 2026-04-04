@@ -68,4 +68,21 @@ async function authenticateUser(email, password) {
     }
 }
 
-module.exports = { signup, authenticateUser };
+async function getUserById(userId) {
+    try {
+        const result = await pool.query(
+            `SELECT name, email, role FROM "user" WHERE user_id = $1`,
+            [userId]
+        );
+
+        if (result.rows.length === 0) {
+            throw new Error("USER_NOT_FOUND");
+        }
+
+        return result.rows[0];
+    } catch (err) {
+        throw err;
+    }
+}
+
+module.exports = { signup, authenticateUser, getUserById };
