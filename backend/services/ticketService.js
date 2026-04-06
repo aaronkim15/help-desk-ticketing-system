@@ -71,7 +71,6 @@ async function createTicket(subject, description, priority, creatorId) {
     return result.rows[0];
 }
 
-<<<<<<< HEAD
 module.exports = {
 getTicketHistoryByUser,
 getActiveTicketsByUser,
@@ -79,9 +78,7 @@ getTicketById,
 createTicket,
 updateTicket,
 deleteTicket,
-=======
-<<<<<<< HEAD
-=======
+}
 async function updateTicket(ticketId, fields) {
 
     if (!ticketId) {
@@ -107,15 +104,10 @@ async function updateTicket(ticketId, fields) {
     return result.rows[0];
 }
 
->>>>>>> parent of d856070 (Implement delete ticket endpoint)
 module.exports = {
     getTicketHistoryByUser,
     getActiveTicketsByUser,
     getTicketById,
     createTicket,
-<<<<<<< HEAD
-=======
-    updateTicket,
->>>>>>> parent of d856070 (Implement delete ticket endpoint)
->>>>>>> e35a45890084ff1d807014d1c1e7c6e4dac544d9
+
 };

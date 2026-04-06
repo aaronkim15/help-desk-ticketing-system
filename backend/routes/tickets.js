@@ -4,10 +4,6 @@ const {
   getActiveTicketsByUser,
   getTicketById,
   createTicket,
-<<<<<<< HEAD
-=======
-  updateTicket,
->>>>>>> parent of d856070 (Implement delete ticket endpoint)
 } = require("../services/ticketService");
 
 function ticketsRouter(req, res) {
@@ -70,7 +66,7 @@ function ticketsRouter(req, res) {
     return true;
   }
 
-<<<<<<< HEAD
+
   if (ticketMatch && req.method === "DELETE") {
     const ticketId = parseInt(ticketMatch[1], 10);
     (async () => {
@@ -91,9 +87,6 @@ function ticketsRouter(req, res) {
     return true;
   }
 
-=======
-<<<<<<< HEAD
-=======
   if (ticketMatch && req.method === "PATCH") {
       const ticketId = parseInt(ticketMatch[1], 10);
 
@@ -142,8 +135,7 @@ function ticketsRouter(req, res) {
     return true;
   }
 
->>>>>>> parent of d856070 (Implement delete ticket endpoint)
->>>>>>> e35a45890084ff1d807014d1c1e7c6e4dac544d9
+
   if (req.url === "/tickets" && req.method === "POST") {
     let body = "";
 
