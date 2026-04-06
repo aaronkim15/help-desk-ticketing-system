@@ -5,13 +5,13 @@
   "scripts": {
     "start": "node server.js",
     "db:create": "createdb helpdesk || true",
-    "db:schema": "psql -d helpdesk -f ../database/schema.sql",
+    "db:schema": "psql -U $DB_USER -d helpdesk -f ../database/schema.sql",
     "db:setup": "npm run db:create && npm run db:schema"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "description": "",
+  "description": "Help Desk Ticketing System backend",
   "dependencies": {
     "bcrypt": "^6.0.0",
     "dotenv": "^17.3.1",

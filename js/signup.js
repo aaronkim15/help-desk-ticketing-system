@@ -31,13 +31,10 @@ function initForm() {
             return;
         }
 
-        // TODO: send POST request to create user account
         const result = await createUser(name, email, password);
-
         if (result) {
-            // TODO: replace with HTTP cookie header from backend
-            localStorage.setItem("token", "mock-token")
-            window.location.href = "../index.html"
+        alert("Account created successfully. Please log in.");
+        window.location.href = "./login.html";
         }
 
 
