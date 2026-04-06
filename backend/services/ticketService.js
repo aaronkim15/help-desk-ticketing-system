@@ -71,9 +71,41 @@ async function createTicket(subject, description, priority, creatorId) {
     return result.rows[0];
 }
 
+<<<<<<< HEAD
+=======
+async function updateTicket(ticketId, fields) {
+
+    if (!ticketId) {
+        throw new Error("MISSING_REQUIRED_FIELDS");
+    }
+
+    const fieldsAsSetQuery = fields.map(([key, _], index) => `${key} = $${index + 2}`).join(", ");
+
+    const result = await pool.query(
+        `
+        UPDATE ticket
+        SET ${fieldsAsSetQuery}
+        WHERE ticket_id = $1
+        RETURNING *
+        `,
+        [ticketId, ...fields.map(([_, value]) => value)]
+    );
+
+    if (result.rows.length === 0) {
+        throw new Error("TICKET_NOT_FOUND");
+    }
+
+    return result.rows[0];
+}
+
+>>>>>>> parent of d856070 (Implement delete ticket endpoint)
 module.exports = {
     getTicketHistoryByUser,
     getActiveTicketsByUser,
     getTicketById,
     createTicket,
+<<<<<<< HEAD
+=======
+    updateTicket,
+>>>>>>> parent of d856070 (Implement delete ticket endpoint)
 };
