@@ -15,6 +15,7 @@ A web-based help desk ticketing system that allows customers to report and track
 ### Prerequisites
 - Git
 - `npx vite`
+- PostgreSQL
 ### Installation
 1. Click the green "Code" button on the repository
 2. Copy the HTTPS web url
@@ -28,7 +29,8 @@ A web-based help desk ticketing system that allows customers to report and track
 2. npm install
 3. DB_USER=your_postgres_username npm run db:setup
 4. create a .env file in /backend (you can copy from .env.example)
-5. npm start
+5. Make sure your postgres is running
+6. npm start
 Important note
 - Your `db:setup` script uses `DB_USER` from the terminal, so the cleanest command is:
 
