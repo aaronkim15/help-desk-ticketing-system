@@ -22,6 +22,7 @@ if (!response.ok) return null;
 return data;
 }
 
+<<<<<<< HEAD
 export async function createUser(name, email, password) {
 const response = await fetch(`${API_BASE}/signup`, {
     method: "POST",
@@ -52,3 +53,6 @@ try {
     return null;
 }
 }
+=======
+module.exports = { signup, authenticateUser };
+>>>>>>> e35a45890084ff1d807014d1c1e7c6e4dac544d9

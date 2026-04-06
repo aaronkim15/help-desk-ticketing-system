@@ -1,44 +1,42 @@
 import { createTicket } from "./ticketService.js";
 
-document.addEventListener("DOMContentLoaded", () => {
 const form = document.getElementById("createTicketForm");
 const cancelBtn = document.getElementById("cancelBtn");
 const formMessage = document.getElementById("formMessage");
 
-cancelBtn.addEventListener("click", () => {
-    window.location.href = "../index.html";
+cancelBtn.addEventListener("click", ()=> {
+    window.location.href = "index.html";
 });
 
-form.addEventListener("submit", async (e) => {
+function formatDate(d) {
+    const day = String(d.getDate()).padStart(2, "0");
+    const monthNames = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+    const mon = monthNames[d.getMonth()];
+    const year = d.getFullYear();
+    return `${day} ${mon} ${year}`;
+}
+
+form.addEventListener("submit", (e)=> {
     e.preventDefault();
 
-    const creatorId = parseInt(localStorage.getItem("user_id"), 10);
     const subject = document.getElementById("subject").value.trim();
     const description = document.getElementById("description").value.trim();
     const priority = document.getElementById("priority").value;
 
-    if (!creatorId) {
-    alert("Please log in first.");
-    window.location.href = "./login.html";
-    return;
+    if(!subject || !description){
+        alert("Subject and Description are required.");
+        return;
     }
 
-    if (!subject || !description) {
-    alert("Subject and description are required.");
-    return;
-    }
+    const TEST_USER_ID = 4567;
 
-    try {
-    await createTicket(creatorId, subject, description, priority);
+    createTicket(TEST_USER_ID, subject, "Open", priority, formatDate(new Date()));
 
-    if (formMessage) {
-        formMessage.textContent = "Ticket created successfully.";
+    if (formMessage){
+        formMessage.textContent = "Ticket created (service method).";
         formMessage.classList.remove("hidden");
     }
 
     window.location.href = "../index.html";
-    } catch (error) {
-    alert(error.message || "Failed to create ticket.");
-    }
 });
-});
+
