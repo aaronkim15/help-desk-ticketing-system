@@ -58,7 +58,6 @@ async function createTicket(subject, description, priority, creatorId) {
     if (priority && !validPriorities.includes(priority)){
         throw new Error("INVALID_PRIORITY");
     }
-<<<<<<< HEAD
 
     const result = await pool.query(
         `
@@ -95,17 +94,6 @@ async function updateTicket(ticketId, fields) {
     if (result.rows.length === 0) {
         throw new Error("TICKET_NOT_FOUND");
     }
-=======
-
-    const result = await pool.query(
-        `
-        INSERT INTO ticket (subject, description, status, priority, creator_id)
-        VALUES ($1, $2, 'unassigned', $3, $4)
-        RETURNING *
-        `,
-        [subject, description, priority || "medium", creatorId]
-    );
->>>>>>> parent of d5f68ac (edits to ticketService)
 
     return result.rows[0];
 }
@@ -117,10 +105,7 @@ module.exports = {
     getTicketById,
     createTicket,
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
     updateTicket,
 >>>>>>> parent of d856070 (Implement delete ticket endpoint)
-=======
->>>>>>> parent of d5f68ac (edits to ticketService)
 };

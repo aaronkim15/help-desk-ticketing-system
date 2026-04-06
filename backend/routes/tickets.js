@@ -5,12 +5,9 @@ const {
   getTicketById,
   createTicket,
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
   updateTicket,
 >>>>>>> parent of d856070 (Implement delete ticket endpoint)
-=======
->>>>>>> parent of d5f68ac (edits to ticketService)
 } = require("../services/ticketService");
 
 function ticketsRouter(req, res) {
@@ -69,7 +66,6 @@ function ticketsRouter(req, res) {
         }
       }
     })();
-<<<<<<< HEAD
 
     return true;
   }
@@ -125,12 +121,6 @@ function ticketsRouter(req, res) {
   }
 
 >>>>>>> parent of d856070 (Implement delete ticket endpoint)
-=======
-
-    return true;
-  }
-
->>>>>>> parent of d5f68ac (edits to ticketService)
   if (req.url === "/tickets" && req.method === "POST") {
     let body = "";
 
