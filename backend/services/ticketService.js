@@ -1,6 +1,6 @@
 const pool = require("../db");
 
-const VALID_PRIORITIES = ["low", "medium", "high", "urgent"];
+const VALID_PRIORITIES = ["low", "medium", "high"];
 const VALID_STATUSES = ["unassigned", "assigned", "in_progress", "resolved", "closed"];
 
 async function getTicketHistoryByUser(userId) {

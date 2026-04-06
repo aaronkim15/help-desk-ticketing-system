@@ -4,6 +4,8 @@ const {
   getActiveTicketsByUser,
   getTicketById,
   createTicket,
+  updateTicket,
+  deleteTicket,
 } = require("../services/ticketService");
 
 function ticketsRouter(req, res) {
@@ -138,22 +140,22 @@ function ticketsRouter(req, res) {
 
   if (req.url === "/tickets" && req.method === "POST") {
     let body = "";
-
+  
     req.on("data", (chunk) => {
       body += chunk.toString();
     });
-
+  
     req.on("end", async () => {
       try {
         const { subject, description, priority, creatorId } = JSON.parse(body);
-
+  
         const ticket = await createTicket(
           subject,
           description,
           priority,
           creatorId
         );
-
+  
         res.writeHead(201, { "Content-Type": "application/json" });
         res.end(
           JSON.stringify({
@@ -162,21 +164,21 @@ function ticketsRouter(req, res) {
           })
         );
       } catch (error) {
+        console.error("CREATE TICKET ERROR:", error);
+  
         if (error.message === "MISSING_REQUIRED_FIELDS") {
           res.writeHead(400, { "Content-Type": "application/json" });
           res.end(JSON.stringify({ message: "Missing required fields" }));
-        }
-        else if(error.message === "INVALID_PRIORITY"){
-          res.writeHead(400, {"Content-Type": "application/json" });
+        } else if (error.message === "INVALID_PRIORITY") {
+          res.writeHead(400, { "Content-Type": "application/json" });
           res.end(JSON.stringify({ message: "Invalid priority value" }));
-        
         } else {
           res.writeHead(500, { "Content-Type": "application/json" });
           res.end(JSON.stringify({ message: "Failed to create ticket" }));
         }
       }
     });
-
+  
     return true;
   }
 

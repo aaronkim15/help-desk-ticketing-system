@@ -1,58 +1,51 @@
-import { authenticateUser } from "./userService.js";
+import { createTicket } from "./ticketService.js";
 
 document.addEventListener("DOMContentLoaded", () => {
-initForm();
-});
+const form = document.getElementById("createTicketForm");
+const cancelBtn = document.getElementById("cancelBtn");
+const formMessage = document.getElementById("formMessage");
 
-function initForm() {
-const form = document.getElementById("login");
-if (!form) return;
+if (!form) {
+    console.error("Form with id=createTicketForm not found");
+    return;
+}
+
+cancelBtn?.addEventListener("click", () => {
+    window.location.href = "../index.html";
+});
 
 form.addEventListener("submit", async (e) => {
     e.preventDefault();
 
-    const email = form.email.value.trim();
-    const password = form.password.value.trim();
+    const creatorId = parseInt(localStorage.getItem("user_id"), 10);
+    const subject = document.getElementById("subject")?.value.trim();
+    const description = document.getElementById("description")?.value.trim();
+    const priority = document.getElementById("priority")?.value;
 
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-    if (!email || !password) {
-    alert("Please fill in all fields.");
+    if (!creatorId) {
+    alert("Please log in first.");
+    window.location.href = "./login.html";
     return;
     }
 
-    if (!emailRegex.test(email)) {
-    alert("Please enter a valid email address.");
+    if (!subject || !description) {
+    alert("Subject and description are required.");
     return;
     }
 
     try {
-    const userData = await authenticateUser(email, password);
-    console.log("User data:", userData);
+    const newTicket = await createTicket(creatorId, subject, description, priority);
+    console.log("Created ticket:", newTicket);
 
-    if (!userData) {
-        alert("Invalid email or password.");
-        return;
+    if (formMessage) {
+        formMessage.textContent = "Ticket created successfully.";
+        formMessage.classList.remove("hidden");
     }
-
-    const token = userData.token;
-    const userId = userData.user_id ?? userData.user?.user_id;
-    const role = userData.role ?? userData.user?.role;
-
-    if (!token || !userId) {
-        console.error("Unexpected login response:", userData);
-        alert("Login response was missing required data.");
-        return;
-    }
-
-    localStorage.setItem("token", token);
-    localStorage.setItem("user_id", String(userId));
-    if (role) localStorage.setItem("role", role);
 
     window.location.href = "../index.html";
     } catch (error) {
-    console.error("Login error:", error);
-    alert("Login failed.");
+    console.error("Create ticket error:", error);
+    alert(error.message || "Failed to create ticket.");
     }
 });
-}
+});

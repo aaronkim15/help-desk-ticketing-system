@@ -1,43 +1,44 @@
-const { authenticateUser } = require("../services/userService.js");
+const { loginUser } = require("../services/userService");
 
 function loginRouter(req, res) {
-    console.log("login router called!")
-    if (req.url === "/login" && req.method === "POST") {
-        let body = "";
-        req.on ("data", (chunk) => {
-            // Process incoming data chunk (e.g., parse JSON, validate input)
-            body += chunk.toString();
-        });
-        req.on('end', async () => {
-            try {
-                const { email, password } = JSON.parse(body);
+if (req.url === "/login" && req.method === "POST") {
+    let body = "";
 
-                const result = await authenticateUser(email, password);
+    req.on("data", (chunk) => {
+    body += chunk.toString();
+    });
 
-                if (result) {
-                    res.writeHead(200, { "Content-Type": "application/json" });
-                    res.end(JSON.stringify({ 
-                        message: "User logged in successfully", 
-                        user_id: result.user.user_id, 
-                        token: result.token, 
-                        role: result.user.role 
-                    }));
-                }
+    req.on("end", async () => {
+    try {
+        const { email, password } = JSON.parse(body);
+        const user = await loginUser(email, password);
 
-            } catch (error) {
-                console.log("My error:", error.message)
-                if (error.message === "INVALID_CREDENTIALS" || error.message === "USER_NOT_FOUND") {
-                    res.writeHead(400, { "Content-Type": "application/json" });
-                    res.end(JSON.stringify({ message: "Invalid email or password" }));
-                } else {
-                    res.writeHead(500, { "Content-Type": "application/json" });
-                    res.end(JSON.stringify({ message: "There was an error logging in the user" }));
-                }
-            }
-        });
-        return true; // route handled
+        res.writeHead(200, { "Content-Type": "application/json" });
+        res.end(JSON.stringify(user));
+    } catch (error) {
+        console.error("LOGIN ERROR:", error);
+
+        if (error.message === "MISSING_REQUIRED_FIELDS") {
+        res.writeHead(400, { "Content-Type": "application/json" });
+        res.end(JSON.stringify({ message: "Missing required fields" }));
+        return;
+        }
+
+        if (error.message === "INVALID_CREDENTIALS") {
+        res.writeHead(401, { "Content-Type": "application/json" });
+        res.end(JSON.stringify({ message: "Invalid email or password" }));
+        return;
+        }
+
+        res.writeHead(500, { "Content-Type": "application/json" });
+        res.end(JSON.stringify({ message: "There was an error logging in the user" }));
     }
-    return false;
+    });
+
+    return true;
 }
 
-module.exports = {loginRouter};
+return false;
+}
+
+module.exports = loginRouter;

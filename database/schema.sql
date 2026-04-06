@@ -16,7 +16,7 @@ CREATE TABLE ticket (
   subject VARCHAR(200) NOT NULL,
   description TEXT NOT NULL,
   status VARCHAR(20) NOT NULL CHECK (status IN ('unassigned','assigned','in_progress','resolved','closed')),
-  priority VARCHAR(20) NOT NULL CHECK (priority IN ('low','medium','high','urgent')),
+  priority VARCHAR(20) NOT NULL CHECK (priority IN ('low','medium','high')),
   created_on TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   updated_on TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   assignee_id INT NULL REFERENCES "user"(user_id) ON DELETE SET NULL,

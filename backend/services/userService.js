@@ -22,7 +22,7 @@ const hashedPassword = await bcrypt.hash(password, 10);
 
 const result = await pool.query(
     `
-    INSERT INTO "user" (name, email, password_hash, role)
+    INSERT INTO "user" (name, email, password, role)
     VALUES ($1, $2, $3, 'customer')
     RETURNING user_id, name, email, role
     `,
@@ -39,7 +39,7 @@ if (!email || !password) {
 
 const result = await pool.query(
     `
-    SELECT user_id, name, email, role, password_hash
+    SELECT user_id, name, email, role, password
     FROM "user"
     WHERE email = $1
     `,
@@ -52,7 +52,7 @@ if (result.rows.length === 0) {
 
 const user = result.rows[0];
 
-const passwordMatch = await bcrypt.compare(password, user.password_hash);
+const passwordMatch = await bcrypt.compare(password, user.password);
 if (!passwordMatch) {
     throw new Error("INVALID_CREDENTIALS");
 }
