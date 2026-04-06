@@ -116,6 +116,7 @@ if (result.rows.length === 0) {
 return result.rows[0];
 }
 
+<<<<<<< HEAD
 async function deleteTicket(ticketId) {
 const result = await pool.query(
     `DELETE FROM ticket WHERE ticket_id = $1 RETURNING *`,
@@ -136,4 +137,12 @@ getTicketById,
 createTicket,
 updateTicket,
 deleteTicket,
+=======
+module.exports = {
+    getTicketHistoryByUser,
+    getActiveTicketsByUser,
+    getTicketById,
+    createTicket,
+    updateTicket,
+>>>>>>> parent of d856070 (Implement delete ticket endpoint)
 };

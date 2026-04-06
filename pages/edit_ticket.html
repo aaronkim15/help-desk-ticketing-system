@@ -9,9 +9,9 @@
 
   <!-- IMPORTANT: scripts are also in /js -->
   <script defer src="../js/main.js" type="module"></script>
-  <script defer src="../js/ticket_detail.js" type="module"></script>
+  <script defer src="../js/edit_ticket.js" type="module"></script>
 
-  <title>Help Desk - Ticket Details</title>
+  <title>Help Desk - Edit Ticket</title>
 </head>
 
 <body>
@@ -69,30 +69,51 @@
           <tbody>
             <tr>
               <th style="padding:12px 14px; text-align:left; border-bottom:1px solid #e2e7f0;">ID</th>
-              <td id="ticketId" style="padding:12px 14px; border-bottom:1px solid #e2e7f0;"></td>
+              <td id="ticketId" style="padding:12px 14px; border-bottom:1px solid #e2e7f0;">
+                <input type="text" readonly>
+              </td>
             </tr>
             <tr>
               <th style="padding:12px 14px; text-align:left; border-bottom:1px solid #e2e7f0;">Subject</th>
-              <td id="subject" style="padding:12px 14px; border-bottom:1px solid #e2e7f0;"></td>
+              <td id="subject" style="padding:12px 14px; border-bottom:1px solid #e2e7f0;">
+                <input type="text">
+              </td>
             </tr>
             <tr>
               <th style="padding:12px 14px; text-align:left; border-bottom:1px solid #e2e7f0;">Description</th>
-              <td id="description" style="padding:12px 14px; border-bottom:1px solid #e2e7f0;"></td>
+              <td id="description" style="padding:12px 14px; border-bottom:1px solid #e2e7f0;">
+                <textarea rows="4"></textarea>
+              </td>
             </tr>
             <tr>
               <th style="padding:12px 14px; text-align:left; border-bottom:1px solid #e2e7f0;">Status</th>
-              <td id="status" style="padding:12px 14px; border-bottom:1px solid #e2e7f0;"></td>
+              <td id="status" style="padding:12px 14px; border-bottom:1px solid #e2e7f0;">
+                <select>
+                  <option value="unassigned">Unassigned</option>
+                  <option value="assigned">Assigned</option>
+                  <option value="in_progress">In Progress</option>
+                  <option value="resolved">Resolved</option>
+                  <option value="closed">Closed</option>
+                </select>
+              </td>
             </tr>
             <tr>
               <th style="padding:12px 14px; text-align:left; border-bottom:1px solid #e2e7f0;">Priority</th>
-              <td id="priority" style="padding:12px 14px; border-bottom:1px solid #e2e7f0;"></td>
+              <td id="priority" style="padding:12px 14px; border-bottom:1px solid #e2e7f0;">
+                <select>
+                  <option value="low">Low</option>
+                  <option value="medium">Medium</option>
+                  <option value="high">High</option>
+                  <option value="urgent">Urgent</option>
+                </select>
+              </td>
             </tr>
           </tbody>
         </table>
 
         <div class="form-actions">
-          <button type="button" id="editBtn">Edit</button>
-          <button type="button" id="backBtn">Back</button>
+            <button type="button" id="cancelBtn">Cancel</button>
+          <button type="button" id="saveBtn">Save</button>
         </div>
       </div>
     </section>

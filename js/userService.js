@@ -5,10 +5,21 @@ export function getUsers() {
     return allUsers;
 }
 
-export function getUserById(id) {
-    const allUsers = JSON.parse(localStorage.getItem("users"))
+export async function getUserById(id) {
+    const response = await fetch('http://localhost:4000/users/' + id, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+    });
 
-    return allUsers.find(user => user.id === id)
+    const data = await response.json();
+
+    if (!response.ok) {
+        return null;
+    }
+
+    return data;
 }
 
 export async function authenticateUser(email, password) {

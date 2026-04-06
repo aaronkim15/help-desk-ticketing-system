@@ -16,17 +16,17 @@ const table = document.getElementById("ticketsTable");
 const body = document.getElementById("ticketsBody");
 
 try {
-const tickets = await getActiveTicketsByUser(userId);
+    const tickets = await getActiveTicketsByUser(userId);
 
-if (!tickets.length) {
+    if (!tickets.length) {
     empty.classList.remove("hidden");
     table.classList.add("hidden");
     return;
-}
+    }
 
-body.innerHTML = "";
+    body.innerHTML = "";
 
-tickets.forEach((ticket) => {
+    tickets.forEach((ticket) => {
     const row = document.createElement("tr");
 
     const id = document.createElement("td");
@@ -47,9 +47,9 @@ tickets.forEach((ticket) => {
 
     row.append(id, subject, status, priority, date);
     body.appendChild(row);
-});
-    } catch {
+    });
+} catch {
     empty.classList.remove("hidden");
     table.classList.add("hidden");
-    }
+}
 }
