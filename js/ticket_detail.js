@@ -1,41 +1,59 @@
-document.addEventListener("DOMContentLoaded", function() {
+import { getTicketById, deleteTicket } from "./ticketService.js";
 
-    function getTickets(){
-        return JSON.parse(localStorage.getItem("tickets")) || [];
+document.addEventListener("DOMContentLoaded", async function () {
+const params = new URLSearchParams(window.location.search);
+const ticketId = parseInt(params.get("id"), 10);
+const from = params.get("from");
+
+const backBtn = document.querySelector("#backBtn");
+const editBtn = document.querySelector("#editBtn");
+const deleteBtn = document.querySelector("#deleteBtn");
+
+backBtn.addEventListener("click", () => {
+    if (from) {
+    if (from === "/") window.location.href = "/";
+    else window.location.href = `/pages/${from}.html`;
+    } else {
+    window.location.href = "/";
     }
+});
 
-    const params = new URLSearchParams(window.location.search);
-    const ticketId = params.get("id");
-    const from = params.get("from")
+editBtn.addEventListener("click", () => {
+    if (from) {
+    window.location.href = `/pages/edit_ticket.html?id=${ticketId}&from=${from}`;
+    } else {
+    window.location.href = `/pages/edit_ticket.html?id=${ticketId}`;
+    }
+});
 
-    const backBtn = document.querySelector("#backBtn")
+if (deleteBtn) {
+    deleteBtn.addEventListener("click", async () => {
+    const confirmed = confirm("Are you sure you want to delete this ticket?");
+    if (!confirmed) return;
 
-    backBtn.addEventListener("click", () => {
-        if (from) {
-            if (from === "/")
-                window.location.href = "/"
-            else
-                window.location.href = `/pages/${from}.html`
+    try {
+        await deleteTicket(ticketId);
+        if (from === "history") {
+        window.location.href = "/pages/history.html";
         } else {
-            window.location.href = "/"
+        window.location.href = "/";
         }
-    })
-
-
-    const tickets = getTickets();
-
-    const ticket = tickets.find(t => String(t.id) === String(ticketId));
-
-    if (!ticket) {
-        document.querySelector(".form-card").innerHTML =
-            "<h2>Ticket not found</h2>";
-        return;
+    } catch (error) {
+        alert(error.message || "Failed to delete ticket.");
     }
+    });
+}
 
-    document.getElementById("ticketId").textContent = "#" + ticket.id;
-    document.getElementById("subject").textContent = ticket.subject || "-";
-    document.getElementById("description").textContent = ticket.description || "-";
-    document.getElementById("status").textContent = ticket.status || "-";
-    document.getElementById("priority").textContent = ticket.priority || "-";
+const ticket = await getTicketById(ticketId);
 
+if (!ticket) {
+    document.querySelector(".form-card").innerHTML = "<h2>Ticket not found</h2>";
+    return;
+}
+
+document.getElementById("ticketId").textContent = "#" + ticket.ticket_id;
+document.getElementById("subject").textContent = ticket.subject || "-";
+document.getElementById("description").textContent = ticket.description || "-";
+document.getElementById("status").textContent = ticket.status || "-";
+document.getElementById("priority").textContent = ticket.priority || "-";
 });

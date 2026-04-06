@@ -8,10 +8,14 @@
     "db:schema": "psql -U $DB_USER -d helpdesk -f ../database/schema.sql",
     "db:setup": "npm run db:create && npm run db:schema"
   },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "Help Desk Ticketing System backend",
   "dependencies": {
-    "bcrypt": "^5.1.1",
-    "dotenv": "^17.2.2",
+    "bcrypt": "^6.0.0",
+    "dotenv": "^17.3.1",
     "jsonwebtoken": "^9.0.3",
-    "pg": "^8.16.3"
+    "pg": "^8.19.0"
   }
 }
