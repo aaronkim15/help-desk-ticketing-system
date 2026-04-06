@@ -1,54 +1,71 @@
-const API_BASE = "http://localhost:4000";
+const pool = require("../db");
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 
-export async function getUserById(id) {
-const response = await fetch(`${API_BASE}/users/${id}`, {
-    method: "GET",
-    headers: { "Content-Type": "application/json" },
-});
+async function signup(name, email, password, isCustomer = true) {
+    try {
+        // Check if user already exists
+        const existingUser = await pool.query(
+            `SELECT * FROM "user" WHERE email = $1`,
+            [email]
+        );
 
-if (!response.ok) return null;
-return response.json();
-}
+        if (existingUser.rows.length > 0) {
+            throw new Error("USER_ALREADY_EXISTS");
+        }
+        
+        const hashedPassword = await bcrypt.hash(password, 10);
 
-export async function authenticateUser(email, password) {
-const response = await fetch(`${API_BASE}/login`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ email, password }),
-});
+        const role = isCustomer ? "customer" : "support";
 
-const data = await response.json();
-if (!response.ok) return null;
-return data;
-}
+        // Insert new user into database
+        const result = await pool.query(
+            `INSERT INTO "user" (name, email, password, role) VALUES ($1, $2, $3, $4) RETURNING *`,
+            [name, email, hashedPassword, role]
+        );
 
-export async function createUser(name, email, password) {
-const response = await fetch(`${API_BASE}/signup`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ name, email, password }),
-});
-
-const data = await response.json();
-if (!response.ok) {
-    throw new Error(data.message || "Failed to sign up");
-}
-
-return data;
-}
-
-export function getValidToken() {
-const token = localStorage.getItem("token");
-if (!token) return null;
-
-try {
-    const payload = JSON.parse(atob(token.split(".")[1]));
-    if (payload.exp * 1000 < Date.now()) {
-    localStorage.removeItem("token");
-    return null;
+        
+        return result.rows[0];
+        
+    } catch(err) {
+        throw err
     }
-    return payload;
-} catch {
-    return null;
 }
+
+async function authenticateUser(email, password) {
+    try {
+
+        // Fetch user by email
+        const result = await pool.query(
+            `SELECT * FROM "user" WHERE email = $1`,
+            [email]
+        );
+
+        if (result.rows.length === 0) {
+            throw new Error("USER_NOT_FOUND");
+        }
+
+        const user = result.rows[0];
+        const isMatch = await bcrypt.compare(password, user.password);
+
+        if (!isMatch) {
+            throw new Error("INVALID_CREDENTIALS");
+        }
+
+        const token = jwt.sign(
+            {
+                user_id: user.user_id, role: user.role
+            },
+            process.env.JWT_SECRET,
+            { expiresIn: "1d" }
+            
+        );
+
+        return { user, token };
+
+    } catch (err) {
+        throw err
+    }
 }
+
+module.exports = { signup, authenticateUser };

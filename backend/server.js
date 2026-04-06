@@ -5,7 +5,6 @@ const pool = require("./db");
 const ticketsRouter = require("./routes/tickets");
 const { signupRouter } = require("./routes/signup");
 const { loginRouter } = require("./routes/login");
-const { userRouter } = require("./routes/user");
 
 function sendJson(res, status, obj) {
     res.writeHead(status, { "Content-Type": "application/json" });
@@ -44,8 +43,7 @@ const server = http.createServer(async (req, res) => {
     const handled = 
         signupRouter(req,res) ||
         loginRouter(req,res) ||
-        ticketsRouter(req, res) ||
-        userRouter(req, res);
+        ticketsRouter(req, res);
 
     console.log("handled:", handled)
 

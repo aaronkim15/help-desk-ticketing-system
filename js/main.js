@@ -7,12 +7,11 @@
  */
 
 import { getUserTickets } from "./ticketService.js";
-import { getValidToken, getUserById } from "./userService.js";
+import { getValidToken } from "./userService.js";
 
 
 document.addEventListener("DOMContentLoaded", () => {
     verifyLogin();
-    initProfile();
     initNavBar();
     initSearchBar();
     initLogoutButton();
@@ -23,18 +22,6 @@ function verifyLogin() {
     const token = getValidToken();
     if (!token) {
         window.location.replace("../pages/login.html")
-    }
-}
-
-async function initProfile() {
-    const userId = localStorage.getItem("user_id");
-    const nameText = document.querySelector(".username");
-
-    try {
-        const userProfile = await getUserById(userId);
-        nameText.textContent = userProfile.name;
-    } catch (error) {
-        console.error("Error fetching user profile:", error);
     }
 }
 
