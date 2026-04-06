@@ -1,47 +1,54 @@
-const { signup } = require("../services/userService.js");
-
+const { createUser } = require("../services/userService");
 
 function signupRouter(req, res) {
+  if (req.url === "/signup" && req.method === "POST") {
+    let body = "";
 
-    if (req.url === "/signup" && req.method === "POST") {
-      // Handle user signup logic here
-  
-      let body = "";
-      req.on ("data", (chunk) => {
-        // Process incoming data chunk (e.g., parse JSON, validate input)
-          body += chunk.toString();
-      });
-      req.on('end', async () => {
+    req.on("data", (chunk) => {
+      body += chunk.toString();
+    });
 
+    req.on("end", async () => {
+      try {
+        const { name, email, password } = JSON.parse(body);
+        const user = await createUser(name, email, password);
 
-        try {
+        res.writeHead(201, { "Content-Type": "application/json" });
+        res.end(
+          JSON.stringify({
+            message: "User created successfully",
+            user,
+          })
+        );
+      } catch (error) {
+        console.error("SIGNUP ERROR:", error);
 
-          const { name, email, password } = JSON.parse(body);
-
-          // Call the signup function from userService
-          const result = await signup(name, email, password);
-
-          if (result) {
-            res.writeHead(200, { "Content-Type": "application/json" });
-            res.end(JSON.stringify({ message: "User signed up successfully", user_id: result.user_id }));
-          }
-
-
-        } catch (error) {
-
-          if (error.message === "USER_ALREADY_EXISTS") {
-              res.writeHead(400, { "Content-Type": "application/json" });
-              res.end(JSON.stringify({ message: "A user with this email already exists" }));
-          } 
-          else {
-            res.writeHead(500, { "Content-Type": "application/json" });
-            res.end(JSON.stringify({ message: "There was an error signing up the user" }));
-          }
+        if (error.message === "MISSING_REQUIRED_FIELDS") {
+          res.writeHead(400, { "Content-Type": "application/json" });
+          res.end(JSON.stringify({ message: "Missing required fields" }));
+          return;
         }
-      });
-      return true; // route handled
-    }
-    return false; // not matching route - not handled
+
+        if (error.message === "EMAIL_ALREADY_EXISTS") {
+          res.writeHead(409, { "Content-Type": "application/json" });
+          res.end(JSON.stringify({ message: "Email already exists" }));
+          return;
+        }
+
+        res.writeHead(500, { "Content-Type": "application/json" });
+        res.end(
+          JSON.stringify({
+            message: "There was an error signing up the user",
+            error: error.message,
+          })
+        );
+      }
+    });
+
+    return true;
+  }
+
+  return false;
 }
 
-module.exports = { signupRouter };
+module.exports = signupRouter;

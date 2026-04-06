@@ -1,46 +1,58 @@
-import { createTicket } from "./ticketService.js";
+import { authenticateUser } from "./userService.js";
 
 document.addEventListener("DOMContentLoaded", () => {
-const form = document.getElementById("createTicketForm");
-const cancelBtn = document.getElementById("cancelBtn");
-const formMessage = document.getElementById("formMessage");
-
-if (!form) return;
-
-cancelBtn?.addEventListener("click", () => {
-    window.location.href = "../index.html";
+initForm();
 });
+
+function initForm() {
+const form = document.getElementById("login");
+if (!form) return;
 
 form.addEventListener("submit", async (e) => {
     e.preventDefault();
 
-    const creatorId = parseInt(localStorage.getItem("user_id"), 10);
-    const subject = document.getElementById("subject").value.trim();
-    const description = document.getElementById("description").value.trim();
-    const priority = document.getElementById("priority").value;
+    const email = form.email.value.trim();
+    const password = form.password.value.trim();
 
-    if (!creatorId) {
-    alert("Please log in first.");
-    window.location.href = "./login.html";
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (!email || !password) {
+    alert("Please fill in all fields.");
     return;
     }
 
-    if (!subject || !description) {
-    alert("Subject and description are required.");
+    if (!emailRegex.test(email)) {
+    alert("Please enter a valid email address.");
     return;
     }
 
     try {
-    await createTicket(creatorId, subject, description, priority);
+    const userData = await authenticateUser(email, password);
+    console.log("User data:", userData);
 
-    if (formMessage) {
-        formMessage.textContent = "Ticket created successfully.";
-        formMessage.classList.remove("hidden");
+    if (!userData) {
+        alert("Invalid email or password.");
+        return;
     }
+
+    const token = userData.token;
+    const userId = userData.user_id ?? userData.user?.user_id;
+    const role = userData.role ?? userData.user?.role;
+
+    if (!token || !userId) {
+        console.error("Unexpected login response:", userData);
+        alert("Login response was missing required data.");
+        return;
+    }
+
+    localStorage.setItem("token", token);
+    localStorage.setItem("user_id", String(userId));
+    if (role) localStorage.setItem("role", role);
 
     window.location.href = "../index.html";
     } catch (error) {
-    alert(error.message || "Failed to create ticket.");
+    console.error("Login error:", error);
+    alert("Login failed.");
     }
 });
-});
+}

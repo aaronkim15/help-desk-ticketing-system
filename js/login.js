@@ -1,44 +1,47 @@
 import { authenticateUser } from "./userService.js";
 
-
 document.addEventListener("DOMContentLoaded", () => {
-    initForm();
-})
+const form = document.getElementById("login");
+if (!form) return;
 
-function initForm() {
-    const form = document.getElementById("login")
+form.addEventListener("submit", async (e) => {
+    e.preventDefault();
 
-    form.addEventListener("submit", async (e) => {
-        e.preventDefault()
+    const email = form.email.value.trim();
+    const password = form.password.value.trim();
 
-        const email = form.email.value.trim();
-        const password = form.password.value.trim();
+    if (!email || !password) {
+    alert("Please fill in all fields.");
+    return;
+    }
 
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    try {
+    const userData = await authenticateUser(email, password);
+    console.log("User data:", userData);
 
-        if (!email || !password) {
-            alert("Please fill in all fields.")
-            return
-        }
+    if (!userData) {
+        alert("Invalid email or password");
+        return;
+    }
 
-        if (!emailRegex.test(email)) {
-            alert("Please enter a valid email address.");
-            return;
-        }
+    const token = userData.token;
+    const userId = userData.user_id ?? userData.user?.user_id;
+    const role = userData.role ?? userData.user?.role;
 
-        // TODO: validate password
-        const userData = await authenticateUser(email, password);
+    if (!token || !userId) {
+        alert("Login response invalid");
+        console.log(userData);
+        return;
+    }
 
-        if (!userData) {
-            alert("Invalid email or password");
-            return
-        }
-        console.log("User data:", userData)
+    localStorage.setItem("token", token);
+    localStorage.setItem("user_id", userId);
+    if (role) localStorage.setItem("role", role);
 
-        // TODO: replace with HTTP cookie header from backend
-        localStorage.setItem("token", userData.token);
-        localStorage.setItem('user_id', userData.user_id);
-        localStorage.setItem('role', userData.role);
-        window.location.href = "../index.html"
-    })
-}
+    window.location.href = "../index.html";
+    } catch (error) {
+    console.error(error);
+    alert("Login failed");
+    }
+});
+});

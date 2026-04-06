@@ -1,42 +1,30 @@
 import { createUser } from "./userService.js";
 
 document.addEventListener("DOMContentLoaded", () => {
-    initForm();
-})
+const form = document.getElementById("signup");
+if (!form) return;
 
-function initForm() {
-    const form = document.getElementById("signup")
+form.addEventListener("submit", async (e) => {
+    e.preventDefault();
 
-    form.addEventListener("submit", async (e) => {
-        e.preventDefault()
+    const name = form.name.value.trim();
+    const email = form.email.value.trim();
+    const password = form.password.value.trim();
 
-        const name = form.name.value.trim();
-        const email = form.email.value.trim();
-        const password = form.password.value.trim();
+    if (!name || !email || !password) {
+    alert("Please fill in all fields.");
+    return;
+    }
 
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    try {
+    const result = await createUser(name, email, password);
+    console.log("Signup result:", result);
 
-        if (!name || !email || !password) {
-            alert("Please fill in all fields.")
-            return
-        }
-
-        if (!emailRegex.test(email)) {
-          alert("Please enter a valid email address.");
-          return;
-        }
-
-        if (password.length < 6) {
-            alert ("Password must be at least 6 characters long.")
-            return;
-        }
-
-        const result = await createUser(name, email, password);
-        if (result) {
-        alert("Account created successfully. Please log in.");
-        window.location.href = "./login.html";
-        }
-
-
-    })
-}
+    alert("Account created successfully. Please log in.");
+    window.location.href = "./login.html";
+    } catch (error) {
+    console.error("Signup error:", error);
+    alert(error.message || "Signup failed.");
+    }
+});
+});

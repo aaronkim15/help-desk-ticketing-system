@@ -72,3 +72,8 @@ if (!response.ok) {
 
 return data;
 }
+
+// compatibility export for existing main.js
+export async function getUserTickets(userId) {
+return await getActiveTicketsByUser(userId);
+}
